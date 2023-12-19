@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev -H 0.0.0.0 -p 8080",
+    "dev": "next dev -H 0.0.0.0 -p 8081",
     "start": "next start",
     "seed": "node -r dotenv/config ./scripts/seed.js"
   },
