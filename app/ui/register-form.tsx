@@ -13,6 +13,7 @@ import {ArrowRightIcon} from '@heroicons/react/20/solid';
 import {Button} from './button';
 import {useFormStatus} from 'react-dom';
 import {register} from '@/app/lib/actions';
+import Link from "next/link";
 
 export default function LoginForm() {
   const [errorMessage, dispatch] = useActionState(register, undefined);
@@ -89,6 +90,13 @@ export default function LoginForm() {
           </div>
         </div>
         <RegisterButton/>
+        <Link
+          href="/login"
+        >
+          <Button className="mt-4 w-full bg-green-400 hover:bg-green-300">
+            Login in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50"/>
+          </Button>
+        </Link>
         <div
           className="flex h-8 items-end space-x-1"
           aria-live="polite"
