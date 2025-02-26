@@ -1,9 +1,31 @@
 import {PrismaClient} from "@prisma/client"
 import {Invoices, Users} from "@prisma/client/index.d.ts"
+import {consola} from "consola";
+import {performance} from "perf_hooks";
 
 export const prisma = new PrismaClient({
   log: ['query']
 })
+
+// 定义中间件来打印 SQL 查询结果
+prisma.$use(async (params, next) => {
+  const start = performance.now();
+
+  // 执行查询
+  const result = await next(params);
+
+  const end = performance.now();
+
+  // 打印查询信息
+  consola.info(`[Action]: ${params.model}.${params.action}`);
+  consola.info(`[Duration]: ${end - start}ms`);
+  consola.info(`[Params]: ${JSON.stringify(params.args)}`);
+  consola.success(`[Result]: ${JSON.stringify(result)}`);
+  consola.info('-----------------------------------\n');
+
+  return result;
+});
+
 
 // 创建发票
 export async function CreateInvoice(data: Omit<Invoices, 'id'>) {
