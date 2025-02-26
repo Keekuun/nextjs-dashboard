@@ -1,7 +1,9 @@
 import {PrismaClient} from "@prisma/client"
 import {Invoices, Users} from "@prisma/client/index.d.ts"
 
-export const prisma = new PrismaClient()
+export const prisma = new PrismaClient({
+  log: ['query']
+})
 
 // 创建发票
 export async function CreateInvoice(data: Omit<Invoices, 'id'>) {
