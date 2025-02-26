@@ -180,20 +180,30 @@ export async function GetCustomerCount() {
   return prisma.customers.count()
 }
 
-// 获取待处理发票的数量
-export async function GetPendingInvoiceCount() {
-  return prisma.invoices.count({
+// 获取 pending 发票的sum(amount)
+export async function GetPendingInvoiceSumAmount() {
+  const result = await prisma.invoices.aggregate({
     where: {
       status: 'pending',
-    }
-  })
+    },
+    _sum: {
+      amount: true,
+    },
+  });
+
+  return result._sum.amount || 0;
 }
 
 // 获取已支付发票的数量
-export async function GetPaidInvoiceCount() {
-  return prisma.invoices.count({
+export async function GetPaidInvoiceSumAmount() {
+  const result = await prisma.invoices.aggregate({
     where: {
       status: 'paid',
-    }
-  })
+    },
+    _sum: {
+      amount: true,
+    },
+  });
+
+  return result._sum.amount || 0;
 }

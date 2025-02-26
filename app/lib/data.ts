@@ -2,15 +2,6 @@ import {formatCurrency} from './utils';
 
 import {unstable_noStore as noStore} from "next/cache";
 import * as db from "@/db";
-import {
-  GetCustomer,
-  GetCustomerCount, GetInvoiceById,
-  GetInvoiceCount,
-  GetInvoicesCount,
-  GetLatestInvoices,
-  GetPaidInvoiceCount,
-  GetPendingInvoiceCount
-} from "@/db";
 
 export async function fetchRevenue() {
   // Add noStore() here prevent the response from being cached.
@@ -61,10 +52,10 @@ export async function fetchCardData() {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
     // how to initialize multiple queries in parallel with JS.
-    const invoiceCountPromise = GetInvoiceCount();
-    const customerCountPromise = GetCustomerCount();
-    const invoicePaidStatusPromise = GetPendingInvoiceCount();
-    const invoicePendingStatusPromise = GetPaidInvoiceCount();
+    const invoiceCountPromise = db.GetInvoiceCount();
+    const customerCountPromise = db.GetCustomerCount();
+    const invoicePaidStatusPromise = db.GetPendingInvoiceSumAmount();
+    const invoicePendingStatusPromise = db.GetPaidInvoiceSumAmount();
     const data = await Promise.all([
       invoiceCountPromise,
       customerCountPromise,
@@ -131,7 +122,7 @@ export async function fetchInvoiceById(id: string) {
   noStore()
 
   try {
-    const data= await db.GetInvoiceById(id)
+    const data = await db.GetInvoiceById(id)
     // console.log(invoice); // Invoice is an empty array []
     return data;
   } catch (error) {
