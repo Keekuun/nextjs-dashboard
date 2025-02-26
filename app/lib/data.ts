@@ -54,8 +54,8 @@ export async function fetchCardData() {
     // how to initialize multiple queries in parallel with JS.
     const invoiceCountPromise = db.GetInvoiceCount();
     const customerCountPromise = db.GetCustomerCount();
-    const invoicePaidStatusPromise = db.GetPendingInvoiceSumAmount();
-    const invoicePendingStatusPromise = db.GetPaidInvoiceSumAmount();
+    const invoicePaidStatusPromise = db.GetPaidInvoiceSumAmount();
+    const invoicePendingStatusPromise = db.GetPendingInvoiceSumAmount();
     const data = await Promise.all([
       invoiceCountPromise,
       customerCountPromise,

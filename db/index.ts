@@ -115,7 +115,8 @@ export async function GetFilteredInvoices({limit, offset, query,}: { limit: numb
       OR: [
         {customer: {name: {contains: query}}},
         {customer: {email: {contains: query}}},
-        {amount: {equals: parseInt(query, 10)}},
+        // 仅在 amount 是有效数字时添加 amount 条件
+        ...(Number.isNaN(Number(query)) ? [] : [{amount: {equals: Number(query)}}]),
         {date: {contains: query}},
         {status: {contains: query}},
       ],
@@ -139,7 +140,7 @@ export async function GetFilteredInvoices({limit, offset, query,}: { limit: numb
     // limit offset
     skip: offset,
     take: limit,
-  });
+  })
 }
 
 export async function GetInvoicesCount(query: string) {
@@ -148,11 +149,11 @@ export async function GetInvoicesCount(query: string) {
       OR: [
         {customer: {name: {contains: query}}},
         {customer: {email: {contains: query}}},
-        {amount: {equals: parseInt(query, 10)}},
+        ...(Number.isNaN(Number(query)) ? [] : [{amount: {equals: Number(query)}}]),
         {date: {contains: query}},
         {status: {contains: query}},
       ],
-    },
+    }
   })
 }
 
@@ -162,6 +163,7 @@ export async function GetInvoiceById(id: string) {
       id: id,
     },
     select: {
+      customer_id: true,
       amount: true,
       date: true,
       status: true,
