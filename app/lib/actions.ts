@@ -7,8 +7,10 @@ import {redirect} from "next/navigation";
 import {signIn} from '@/auth';
 import {AuthError} from 'next-auth';
 import {getUser} from "@/app/lib/data";
-import {User} from "@/app/lib/definitions";
 import bcrypt from "bcrypt";
+
+import * as db from "@/db"
+import {Uuid} from '@/utils/uuid';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -67,10 +69,12 @@ export async function createInvoice(prevState: State, formData: FormData) {
 
   // Insert data into the database
   try {
-    await sql`
-        INSERT INTO invoices (customer_id, amount, status, date)
-        VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
-    `;
+    await db.CreateInvoice({
+      customer_id: customerId,
+      amount: amountInCents,
+      status: status,
+      date: date,
+    })
   } catch (error) {
     return {
       message: 'Database Error: Failed to Create Invoice.',
@@ -113,13 +117,12 @@ export async function updateInvoice(id: string,
   const amountInCents = amount * 100;
 
   try {
-    await sql`
-        UPDATE invoices
-        SET customer_id = ${customerId},
-            amount      = ${amountInCents},
-            status      = ${status}
-        WHERE id = ${id}
-    `;
+    await db.UpdateInvoice({
+      id,
+      customer_id: customerId,
+      amount: amountInCents,
+      status: status,
+    })
   } catch (error) {
     return {
       message: 'Database Error: Failed to Update Invoice.',
@@ -133,9 +136,7 @@ export async function updateInvoice(id: string,
 export async function deleteInvoice(id: string) {
   // throw new Error('Failed to Delete Invoice');
   try {
-    await sql`DELETE
-              FROM invoices
-              WHERE id = ${id}`;
+    await db.DeleteInvoice(id)
     revalidatePath('/dashboard/invoices');
     return {message: 'Deleted Invoice.'};
   } catch (error) {
@@ -191,10 +192,13 @@ export async function register(
     // 加密 password
     const hashedPassword = await bcrypt.hash(password, 10);
     // 创建新用户
-    await sql`
-        INSERT INTO users (name, email, password)
-        VALUES (${name}, ${email}, ${hashedPassword})
-    `;
+    await db.CreateUser({
+      name,
+      email,
+      password: hashedPassword,
+      id: Uuid(),
+      created_at: new Date()
+    });
     await authenticate(prevState, formData);
     return '';
   } catch (error) {

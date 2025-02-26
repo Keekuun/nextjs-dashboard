@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  // @id： PRIMARY KEY
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  password   String
+  created_at DateTime? @default(now())
+}
+
+model Invoices {
+  id          String     @id @default(uuid())
+  customer_id String
+  amount      Int        @default(0)
+  status      String
+  date        String
+  customer    Customers? @relation(fields: [customer_id], references: [id])
+}
+
+// sqlite 不支持 @db.VarChar(255)  @db.Uuid
+model Customers {
+  id        String @id @default(uuid())
+  name      String
+  email     String
+  image_url String
+
+  Invoices Invoices[]
+}
+
+model Revenue {
+  id      Int    @id @default(autoincrement())
+  month   String
+  revenue Int
+}
