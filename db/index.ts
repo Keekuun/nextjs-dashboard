@@ -40,7 +40,7 @@ export async function GetUser(email: string) {
 }
 
 // 创建用户
-export async function CreateUser(data: Users) {
+export async function CreateUser(data: Omit<Users, 'id' | 'created_at'>) {
   return prisma.users.create({
     data,
   })

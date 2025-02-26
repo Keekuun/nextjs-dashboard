@@ -196,8 +196,6 @@ export async function register(
       name,
       email,
       password: hashedPassword,
-      id: Uuid(),
-      created_at: new Date()
     });
     await authenticate(prevState, formData);
     return '';
