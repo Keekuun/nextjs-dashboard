@@ -8,41 +8,35 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@heroicons/react": "^2.1.5",
-    "@tailwindcss/forms": "^0.5.9",
-    "@types/node": "20.5.7",
+    "@heroicons/react": "^2.2.0",
+    "@tailwindcss/forms": "^0.5.10",
+    "@types/node": "^20.5.7",
     "@vercel/postgres": "^0.5.1",
-    "autoprefixer": "10.4.15",
+    "autoprefixer": "^10.4.15",
     "bcrypt": "^5.1.1",
     "clsx": "^2.1.1",
-    "next": "15.0.3",
-    "next-auth": "5.0.0-beta.25",
+    "next": "15.2.4",
+    "next-auth": "^5.0.0-beta.25",
     "postcss": "8.4.31",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
-    "swr": "^2.2.5",
-    "tailwindcss": "3.3.3",
-    "typescript": "5.2.2",
-    "use-debounce": "^10.0.4",
-    "zod": "^3.23.8"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "swr": "^2.3.3",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2",
+    "use-debounce": "^10.0.5",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
-    "dotenv": "^16.4.5",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "dotenv": "^16.6.1",
     "eslint": "^8.57.1",
-    "eslint-config-next": "15.0.3",
-    "prettier": "^3.3.3"
+    "eslint-config-next": "^15.0.3",
+    "prettier": "^3.6.2"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "pnpm@9.1.4+sha512.9df9cf27c91715646c7d675d1c9c8e41f6fce88246f1318c1aa6a1ed1aeb3c4f032fcdf4ba63cc69c4fe6d634279176b5358727d8f2cc1e65b65f43ce2f8bfb0",
-  "pnpm": {
-    "overrides": {
-      "@types/react": "npm:types-react@19.0.0-rc.1",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
-    }
-  }
+  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977"
 }
