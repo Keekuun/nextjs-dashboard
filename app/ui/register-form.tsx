@@ -16,7 +16,7 @@ import {register} from '@/app/lib/actions';
 import Link from "next/link";
 
 export default function LoginForm() {
-  const [errorMessage, dispatch] = useActionState(register, undefined);
+  const [errorMessage, dispatch, pending] = useActionState(register, undefined);
 
   return (
     <form action={dispatch} className="space-y-3">
@@ -89,7 +89,7 @@ export default function LoginForm() {
             </div>
           </div>
         </div>
-        <RegisterButton/>
+        <RegisterButton pending={pending}/>
         <Link
           href="/login"
         >
@@ -114,9 +114,7 @@ export default function LoginForm() {
   );
 }
 
-function RegisterButton() {
-  const {pending} = useFormStatus();
-
+function RegisterButton({pending}: {pending?: boolean}) {
   return (
     <Button className="mt-4 w-full" aria-disabled={pending}>
       Sign up <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50"/>

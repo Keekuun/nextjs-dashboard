@@ -8,7 +8,7 @@ import {signIn} from '@/auth';
 import {AuthError} from 'next-auth';
 import {getUser} from "@/app/lib/data";
 import {User} from "@/app/lib/definitions";
-import bcrypt from "bcrypt";
+import * as bcrypt from 'bcrypt';
 
 const FormSchema = z.object({
   id: z.string(),

@@ -1,8 +1,5 @@
 import AcmeLogo from '@/app/ui/acme-logo';
 import LoginForm from '@/app/ui/login-form';
-import Link from "next/link";
-import {Button} from "@/app/ui/button";
-import {ArrowRightIcon} from "@heroicons/react/20/solid";
 
 export default function LoginPage() {
   return (
