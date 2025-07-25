@@ -1,0 +1,54 @@
+# .github/workflows/release.yml
+
+name: Build and Release Next.js App
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build and Release
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. 设置 Node.js 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      # 3. 安装依赖
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. 构建 Next.js 项目
+      - name: Build application
+        run: npm run build
+
+      # 5. 打包构建产物 (TAR.GZ for Linux/macOS)
+      - name: Create release package (TAR.GZ)
+        run: tar -czvf nextjs-dashboard-${{ github.ref_name }}.tar.gz .next
+
+      # 6. (新增) 打包构建产物 (ZIP for Windows)
+      #    使用 zip 命令递归地将 .next 目录打包
+      - name: Create release package (ZIP)
+        run: zip -r nextjs-dashboard-${{ github.ref_name }}.zip .next
+
+      # 7. 创建 GitHub Release 并上传所有构建包
+      #    更新 files 字段以包含两种格式的压缩包
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            *.tar.gz
+            *.zip
