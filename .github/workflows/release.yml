@@ -24,8 +24,9 @@ jobs:
       # 使用官方的 pnpm/action-setup action，并锁定主版本号
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10 # 推荐锁定 pnpm 的主版本
+#        with:
+#          package.json中有定义packageManager字段，这里会冲突
+#          version: 10 # 推荐锁定 pnpm 的主版本
 
       # 3. 设置 Node.js 环境
       # 必须将 cache 设置为 'pnpm' 来让 setup-node 正确缓存 pnpm 的依赖
