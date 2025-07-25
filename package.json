@@ -1,11 +1,17 @@
 {
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "build": "next build",
     "dev": "next dev --turbopack",
     "start": "next start",
     "seed": "node -r dotenv/config ./scripts/seed.js",
-    "lint": "next lint"
+    "lint": "next lint",
+    "release": "pnpm dlx standard-version",
+    "release:patch": "standard-version --release-as patch",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:publish": "git push --follow-tags origin main && npm publish"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
