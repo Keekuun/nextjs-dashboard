@@ -1,6 +1,7 @@
 import AcmeLogo from '@/app/ui/acme-logo';
 import LoginForm from '@/app/ui/login-form';
 import GoogleOneTap from '@/app/ui/google-one-tap';
+import { Suspense } from 'react';
 
 export default function LoginPage() {
   return (
@@ -12,7 +13,9 @@ export default function LoginPage() {
           </div>
         </div>
         <LoginForm />
-        <GoogleOneTap />
+        <Suspense fallback={<div>Loading...</div>}>
+          <GoogleOneTap />
+        </Suspense>
       </div>
     </main>
   );
