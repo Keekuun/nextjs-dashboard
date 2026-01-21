@@ -145,6 +145,10 @@ export async function deleteInvoice(id: string) {
   }
 }
 
+export async function signInWithGoogle() {
+  await signIn('google');
+}
+
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
