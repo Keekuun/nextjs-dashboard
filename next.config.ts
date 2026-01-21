@@ -11,6 +11,7 @@ const withSerwist = withSerwistInit({
 const nextConfig: NextConfig = {
   /* config options here */
   output: 'standalone',
+  turbopack: {},
 };
 
 export default withSerwist(nextConfig);
